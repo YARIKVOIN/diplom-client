@@ -8,7 +8,7 @@ import { toggleCartItem } from '@/utils/shopping-cart'
 import { $user } from '@/context/user'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import PartTabs from './PartTabs'
-import { AddBoilerPartsFx, getBoilerPartsFx, updateBoilerPartsFx } from '@/app/api/boilerParts'
+import { AddBoilerPartsFx, getBoilerPartsFx } from '@/app/api/boilerParts'
 import {
   $boilerParts,
   setBoilerParts,
@@ -16,27 +16,23 @@ import {
 } from '@/context/boilerParts'
 import { removeFromCartFx } from '@/app/api/shopping-cart'
 import styles from '@/styles/part/index.module.scss'
-import { IIBoilerPartAdd} from '@/types/boilerparts'
+import { IIBoilerPartAdd } from '@/types/boilerparts'
 import { useForm } from 'react-hook-form'
 import styless from '@/styles/auth/index.module.scss'
-import {ReactSortable} from "react-sortablejs";
-import {BounceLoader} from "react-spinners";
+import { ReactSortable } from "react-sortablejs"
+import { BounceLoader } from "react-spinners"
 import axios from 'axios'
 import Link from 'next/link'
 import Header from '@/components/modules/Header/Header'
 
 const PartPage = () => {
-  const [spinner, setSpinner] = useState(false)
   const mode = useStore($mode)
   const user = useStore($user)
   const isMobile = useMediaQuery(850)
   const boilerPart = useStore($boilerPart)
-  const boilerParts = useStore($boilerParts)
   const cartItems = useStore($shoppingCart)
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : ''
   const isInCart = cartItems.some((item) => item.partId === boilerPart.id)
-  const spinnerToggleCart = useStore(removeFromCartFx.pending)
-  const spinnerSlider = useStore(getBoilerPartsFx.pending)
   const [images,setImages] = useState(boilerPart.images
     ? (JSON.parse(boilerPart.images))
     : []);
@@ -85,7 +81,6 @@ function updateImagesOrder(images: any) {
 
   const onSubmit = async (data: IIBoilerPartAdd) => {
     try {
-      setSpinner(true);
       const userData = await AddBoilerPartsFx({
         url: 'boiler-parts/Add',
         memory: data.memory, 
@@ -125,7 +120,6 @@ function updateImagesOrder(images: any) {
     } catch (error) {
       toast.error((error as Error).message)
     } finally {
-      setSpinner(false)
     }
   }
 
