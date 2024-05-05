@@ -26,10 +26,9 @@ import styles from '@/styles/part/index.module.scss'
 import { IIBoilerPartDelete, IIBoilerPartReplace } from '@/types/boilerparts'
 import { useForm } from 'react-hook-form'
 import styless from '@/styles/auth/index.module.scss'
-import {ItemInterface, ReactSortable} from "react-sortablejs";
+import {ReactSortable} from "react-sortablejs";
 import {BounceLoader} from "react-spinners";
 import axios from 'axios'
-import src from 'react-select/dist/declarations/src'
 import {useRouter} from 'next/router'
 
 const PartPage = () => {

@@ -3,33 +3,25 @@ import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import { $boilerPart } from '@/context/boilerPart'
 import { $mode } from '@/context/mode'
-import PartImagesList from '@/components/modules/PartPage/PartImagesList'
-import { formatPrice } from '@/utils/common'
 import { $shoppingCart } from '@/context/shopping-cart'
-import CartHoverCheckedSvg from '@/components/elements/CartHoverCheckedSvg/CartHoverCheckedSvg'
-import CartHoverSvg from '@/components/elements/CartHoverSvg/CartHoverSvg'
-import spinnerStyles from '@/styles/spinner/index.module.scss'
 import { toggleCartItem } from '@/utils/shopping-cart'
 import { $user } from '@/context/user'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import PartTabs from './PartTabs'
-import DashboardSlider from '@/components/modules/DashboardPage/DashboardSlider'
 import { AddBoilerPartsFx, getBoilerPartsFx, updateBoilerPartsFx } from '@/app/api/boilerParts'
 import {
   $boilerParts,
   setBoilerParts,
   setBoilerPartsByPopularity,
 } from '@/context/boilerParts'
-import PartAccordion from '@/components/modules/PartPage/PartAccordion'
 import { removeFromCartFx } from '@/app/api/shopping-cart'
 import styles from '@/styles/part/index.module.scss'
-import { IIBoilerPartAdd, IIBoilerPartReplace } from '@/types/boilerparts'
+import { IIBoilerPartAdd} from '@/types/boilerparts'
 import { useForm } from 'react-hook-form'
 import styless from '@/styles/auth/index.module.scss'
-import {ItemInterface, ReactSortable} from "react-sortablejs";
+import {ReactSortable} from "react-sortablejs";
 import {BounceLoader} from "react-spinners";
 import axios from 'axios'
-import src from 'react-select/dist/declarations/src'
 import Link from 'next/link'
 import Header from '@/components/modules/Header/Header'
 

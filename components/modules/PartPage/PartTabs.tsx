@@ -6,16 +6,11 @@ import { $boilerPart } from '@/context/boilerPart'
 import { $mode } from '@/context/mode'
 import styles from '@/styles/part/index.module.scss'
 import { useEffect} from 'react'
-import PartImagesList from '@/components/modules/PartPage/PartImagesList'
-import { formatPrice } from '@/utils/common'
+
 import { $shoppingCart } from '@/context/shopping-cart'
-import CartHoverCheckedSvg from '@/components/elements/CartHoverCheckedSvg/CartHoverCheckedSvg'
-import CartHoverSvg from '@/components/elements/CartHoverSvg/CartHoverSvg'
-import spinnerStyles from '@/styles/spinner/index.module.scss'
-import { toggleCartItem } from '@/utils/shopping-cart'
+
 import { $user } from '@/context/user'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
-import DashboardSlider from '@/components/modules/DashboardPage/DashboardSlider'
 import { DeleteBoilerPartsFx, getBoilerPartsFx, updateBoilerPartsFx } from '@/app/api/boilerParts'
 import {useRouter} from 'next/router'
 import {
@@ -23,30 +18,15 @@ import {
   setBoilerParts,
   setBoilerPartsByPopularity,
 } from '@/context/boilerParts'
-import PartAccordion from '@/components/modules/PartPage/PartAccordion'
 import { removeFromCartFx } from '@/app/api/shopping-cart'
 import { IIBoilerPartDelete, IIBoilerPartReplace } from '@/types/boilerparts'
 import { useForm } from 'react-hook-form'
-import BestsellerInput from '@/components/elements/ReplaceBoiler/BestsellerInput'
-import CameraInput from '@/components/elements/ReplaceBoiler/CameraInput'
-import DescriptionInput from '@/components/elements/ReplaceBoiler/DescriptionInput'
-import DisplayInput from '@/components/elements/ReplaceBoiler/DisplayInput'
-import In_stockInput from '@/components/elements/ReplaceBoiler/In_stockInput'
-import MemoryInput from '@/components/elements/ReplaceBoiler/MemoryInput'
-import New_Input from '@/components/elements/ReplaceBoiler/New_Input'
-import PopularityInput from '@/components/elements/ReplaceBoiler/PopularityInput'
-import PriceInput from '@/components/elements/ReplaceBoiler/PriceInput'
-import ProccesorInput from '@/components/elements/ReplaceBoiler/ProccesorInput'
-import Vendor_codeInput from '@/components/elements/ReplaceBoiler/Vendor_codeInput'
-import NameInput from '@/components/elements/ReplaceBoiler/NameInput'
-import ImagesInput from '@/components/elements/ReplaceBoiler/imagesInput'
+
 import { toast } from 'react-toastify'
-import NextApiResponse from 'next';
 import styless from '@/styles/auth/index.module.scss'
 import {ItemInterface, ReactSortable} from "react-sortablejs";
 import {BounceLoader} from "react-spinners";
 import axios from 'axios'
-import src from 'react-select/dist/declarations/src'
 
 const PartTabs = () => {
   const [showDescription, setShowDescription] = useState(true)
