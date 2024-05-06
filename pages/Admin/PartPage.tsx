@@ -10,17 +10,15 @@ import { useMediaQuery } from '@/hooks/useMediaQuery'
 import PartTabs from './PartTabs'
 import { AddBoilerPartsFx, getBoilerPartsFx } from '@/app/api/boilerParts'
 import {
-  $boilerParts,
   setBoilerParts,
   setBoilerPartsByPopularity,
 } from '@/context/boilerParts'
-import { removeFromCartFx } from '@/app/api/shopping-cart'
 import styles from '@/styles/part/index.module.scss'
 import { IIBoilerPartAdd } from '@/types/boilerparts'
 import { useForm } from 'react-hook-form'
 import styless from '@/styles/auth/index.module.scss'
-import { ReactSortable } from "react-sortablejs"
-import { BounceLoader } from "react-spinners"
+import { ReactSortable } from 'react-sortablejs'
+import { BounceLoader } from 'react-spinners'
 import axios from 'axios'
 import Link from 'next/link'
 import Header from '@/components/modules/Header/Header'
@@ -33,12 +31,9 @@ const PartPage = () => {
   const cartItems = useStore($shoppingCart)
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : ''
   const isInCart = cartItems.some((item) => item.partId === boilerPart.id)
-  const [images,setImages] = useState(boilerPart.images
-    ? (JSON.parse(boilerPart.images))
-    : []);
+  const [images, setImages] = useState(boilerPart.images ? (JSON.parse(boilerPart.images)) : []);
     // console.log(boilerPart.images);
 const [isUploading,setIsUploading] = useState(false);
-
 async function uploadImages(ev: { target: { files: any } }) {
   const files = ev.target?.files;
   if (files?.length > 0) {
