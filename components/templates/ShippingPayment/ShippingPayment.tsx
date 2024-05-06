@@ -60,7 +60,7 @@ const ShippingPayment = () => {
               } ${darkModeClass}`}
             >
               <button className={darkModeClass} onClick={handleTab1}>
-              Какие виды электроники доступны в вашем магазине?
+                Какие виды электроники доступны в вашем магазине?
               </button>
             </li>
             <li
@@ -69,7 +69,7 @@ const ShippingPayment = () => {
               } ${darkModeClass}`}
             >
               <button className={darkModeClass} onClick={handleTab2}>
-              Какие бренды электроники вы предлагаете?
+                Какие бренды электроники вы предлагаете?
               </button>
             </li>
             <li
@@ -78,7 +78,7 @@ const ShippingPayment = () => {
               } ${darkModeClass}`}
             >
               <button className={darkModeClass} onClick={handleTab3}>
-              Какие услуги вы предоставляете после покупки?
+                Какие услуги вы предоставляете после покупки?
               </button>
             </li>
             <li
@@ -87,7 +87,7 @@ const ShippingPayment = () => {
               } ${darkModeClass}`}
             >
               <button className={darkModeClass} onClick={handleTab4}>
-              Какие способы оплаты вы принимаете?
+                Какие способы оплаты вы принимаете?
               </button>
             </li>
           </ul>

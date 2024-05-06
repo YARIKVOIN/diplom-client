@@ -638,13 +638,13 @@ function updateImagesOrder(images: any) {
           <h2 className={`${styles.part__title} ${darkModeClass}`}>
             Вам понравится
           </h2>
-          <DashboardSlider
-            goToPartPage
-            spinner={spinnerSlider}
-            items={boilerParts.rows || []}
-          />
-        </div>
+        <DashboardSlider
+          goToPartPage
+          spinner={spinnerSlider}
+          items={boilerParts.rows || []}
+       />
       </div>
+    </div>
   )
 }
 
