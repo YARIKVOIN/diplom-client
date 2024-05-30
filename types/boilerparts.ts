@@ -4,7 +4,7 @@ export interface IBoilerPart {
   id: number
   memory: string
   price: number
-  proccesor: string
+  atributes: string
   vendor_code: string
   name: string
   description: string
@@ -13,9 +13,7 @@ export interface IBoilerPart {
   bestseller: boolean
   new: boolean
   popularity: number
-  display: string
   model: string
-  camera: string
 }
 
 export interface IBoilerPartReplace {
@@ -23,7 +21,7 @@ export interface IBoilerPartReplace {
   id: number
   memory: string
   price: number
-  proccesor: string
+  atributes: string
   vendor_code: string
   name: string
   description: string
@@ -32,9 +30,7 @@ export interface IBoilerPartReplace {
   bestseller: boolean
   new_: boolean
   popularity: number
-  display: string
   model: string
-  camera: string
 }
 export interface IBoilerPartDelete {
   url: string
@@ -47,7 +43,7 @@ export interface IIBoilerPartReplace {
   id: number
   memory: string
   price: number
-  proccesor: string
+  atributes: string
   vendor_code: string
   name: string
   description: string
@@ -56,14 +52,12 @@ export interface IIBoilerPartReplace {
   bestseller: boolean
   new_: boolean
   popularity: number
-  display: string
   model: string
-  camera: string
 }
 export interface IIBoilerPartAdd{
   memory: string
   price: number
-  proccesor: string
+  atributes: string
   vendor_code: string
   name: string
   description: string
@@ -72,16 +66,15 @@ export interface IIBoilerPartAdd{
   bestseller: boolean
   new_: boolean
   popularity: number
-  display: string
   model: string
-  camera: string
+  znach: string
 }
 
 export interface IBoilerPartAdd{
   url: string
   memory: string
   price: number
-  proccesor: string
+  atributes: string
   vendor_code: string
   name: string
   description: string
@@ -90,9 +83,7 @@ export interface IBoilerPartAdd{
   bestseller: boolean
   new_: boolean
   popularity: number
-  display: string
   model: string
-  camera: string
 }
 
 export interface IBoilerParts {

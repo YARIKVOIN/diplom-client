@@ -2,12 +2,35 @@ import { NextRouter } from 'next/router'
 import { getQueryParamOnFirstRender, idGenerator } from './common'
 import { getBoilerPartsFx } from '@/app/api/boilerParts'
 import { setFilteredBoilerParts } from '@/context/boilerParts'
+import { useStore } from 'effector-react'
+import { $proizvoditels, setProizvoditels } from '@/context/proizvoditels'
+import { useEffect, useState } from 'react'
+import { getProizvoditelFx } from '@/app/api/proizvoditel'
+import { toast } from 'react-toastify'
+import { IProizvoditel, IProizvoditels } from '@/types/proizvoditel'
+import { getCategoryFx } from '@/app/api/category'
+import { ICategory } from '@/types/category'
+import { IFilterCheckboxItem } from '@/types/catalog'
 
 const createManufacturerCheckboxObj = (title: string) => ({
   title,
   checked: false,
   id: idGenerator(),
 })
+
+
+// export const boilerManufacturers = async () => { 
+//   var data = await getProizvoditelFx('/proizvoditel');
+//   console.log(data.map(createManufacturerCheckboxObj))
+//   return data.map(createManufacturerCheckboxObj)
+// }
+// console.log(boilerManufacturers())
+// export const partsManufacturers = async () => { 
+//   var {data} = await getCategoryFx('/category');
+//     var partsManufacturers2 = data.map((item: ICategory) => (item.category)); 
+//     partsManufacturers2 = partsManufacturers2.map(createManufacturerCheckboxObj)
+//     return partsManufacturers2
+// }
 
 export const boilerManufacturers = [
   'Apple',
@@ -16,19 +39,37 @@ export const boilerManufacturers = [
   'Lenovo',
   'Asus',
   'LG',
-  'Acer',
-  'Huawei',
-  'Honor',
-  'Poco',
+  'Borch',
+  'Nvidia',
+  'AMD',
+  'Philips',
+  'Razer',
+  'Sony',
+  'Logitech',
+  'Canon',
+  'Sven',
+  'Dyson',
 ].map(createManufacturerCheckboxObj)
 
+
 export const partsManufacturers = [
-  '32GB',
-  '64GB',
-  '128GB',
-  '256GB',
-  '512GB',
-  '1TB',
+  'Телефон',
+  'Ноутбук',
+  'Планшет',
+  'Телевизор',
+  'Монитор',
+  'Системный блок',
+  'Видеокарта',
+  'Видеокамера',
+  'Клавиатура',
+  'Мышка',
+  'Наушники',
+  'Микроволновка',
+  'Стиральная машина',
+  'Кофеварка',
+  'Фен',
+  'Пылесос',
+  'Холодильник',
 ].map(createManufacturerCheckboxObj)
 
 const checkPriceFromQuery = (price: number) =>

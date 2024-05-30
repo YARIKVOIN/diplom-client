@@ -1,5 +1,6 @@
 import { IBoilerParts } from '@/types/boilerparts'
 import { IFilterCheckboxItem } from '@/types/catalog'
+import { IProizvoditel } from '@/types/proizvoditel'
 import { boilerManufacturers, partsManufacturers } from '@/utils/catalog'
 import { createDomain } from 'effector-next'
 
@@ -69,7 +70,10 @@ export const $boilerParts = boilerParts
     ...state,
     rows: state.rows.sort((a, b) => b.popularity - a.popularity),
   }))
-
+//  var boilerManufacturers2 = boilerManufacturers2().then((result) => {
+//   console.log(result);
+//   return result;
+// }) as any;
 export const $boilerManufacturers = boilerParts
   .createStore<IFilterCheckboxItem[]>(
     boilerManufacturers as IFilterCheckboxItem[]
@@ -83,7 +87,10 @@ export const $boilerManufacturers = boilerParts
   .on(setBoilerManufacturersFromQuery, (state, manufacturersFromQuery) => [
     ...updateManufacturerFromQuery(state, manufacturersFromQuery),
   ])
-
+  //  var partsManufacturers2 = partsManufacturers2().then((result) => {
+  //   console.log(result);
+  //   return result;
+  // }) as any;
 export const $partsManufacturers = boilerParts
   .createStore<IFilterCheckboxItem[]>(
     partsManufacturers as IFilterCheckboxItem[]
@@ -97,7 +104,6 @@ export const $partsManufacturers = boilerParts
   .on(setPartsManufacturersFromQuery, (state, manufacturersFromQuery) => [
     ...updateManufacturerFromQuery(state, manufacturersFromQuery),
   ])
-
 export const $filteredBoilerParts = boilerParts
   .createStore<IBoilerParts>({} as IBoilerParts)
   .on(setFilteredBoilerParts, (_, parts) => parts)

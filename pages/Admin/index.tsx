@@ -77,34 +77,6 @@ function Admin() {
       var dataaa = {"count": 4, "rows": data}
       setOrderReals(dataaa)
       return
-      // if (!isValidOffset) {
-      //   router.replace({
-      //     query: {
-      //       offset: 1,
-      //     },
-      //   })
-
-      //   resetPagination(data)
-      //   return
-      // }
-
-      // if (isValidOffset) {
-      //   if (+query.offset > Math.ceil(data.count / 20)) {
-      //     router.push(
-      //       {
-      //         query: {
-      //           ...query,
-      //           offset: 1,
-      //         },
-      //       },
-      //       undefined,
-      //       { shallow: true }
-      //     )
-
-      //     setCurrentPage(0)
-      // setOrderReals(data)
-      //     return
-      //   }
     } catch (error) {
       toast.error((error as Error).message)
     }
@@ -163,6 +135,33 @@ function Admin() {
                   className={`${styles.header__nav__list__item__link__link2} ${darkModeClass}`}
                 >
                   Добавить товар
+                </a>
+              </Link>
+              </div>
+              <div className={`${styles.divdivdiv}`}>
+        <Link href="/Admin/proizvoditel" passHref legacyBehavior>
+                <a
+                  className={`${styles.header__nav__list__item__link__link2} ${darkModeClass}`}
+                >
+                  Добавить производителя
+                </a>
+              </Link>
+              </div>
+              <div className={`${styles.divdivdiv}`}>
+        <Link href="/Admin/category" passHref legacyBehavior>
+                <a
+                  className={`${styles.header__nav__list__item__link__link2} ${darkModeClass}`}
+                >
+                  Добавить тип товара
+                </a>
+              </Link>
+              </div>
+              <div className={`${styles.divdivdiv}`}>
+              <Link href="/Admin/atributes" passHref legacyBehavior>
+                <a
+                  className={`${styles.header__nav__list__item__link__link2} ${darkModeClass}`}
+                >
+                  Добавить атрибут
                 </a>
               </Link>
               </div>

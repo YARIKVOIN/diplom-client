@@ -100,10 +100,10 @@ const CatalogFiltersMobile = ({
             className={`${styles.filters__manufacturer__btn} ${darkModeClass}`}
             onClick={handleOpenParts}
           >
-            Память
+            Тип товара
           </button>
           <FiltersPopup
-            title="Память"
+            title="Тип товара"
             resetFilterBtnDisabled={!isAnyPartsManufacturerChecked}
             updateManufacturer={updatePartsManufacturer}
             setManufacturer={setPartsManufacturers}

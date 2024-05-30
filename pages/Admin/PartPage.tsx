@@ -5,11 +5,9 @@ import { $boilerPart } from '@/context/boilerPart'
 import { $mode } from '@/context/mode'
 import PartImagesList from '@/components/modules/PartPage/PartImagesList'
 import { formatPrice } from '@/utils/common'
-import { $shoppingCart } from '@/context/shopping-cart'
 import CartHoverCheckedSvg from '@/components/elements/CartHoverCheckedSvg/CartHoverCheckedSvg'
 import CartHoverSvg from '@/components/elements/CartHoverSvg/CartHoverSvg'
 import spinnerStyles from '@/styles/spinner/index.module.scss'
-import { toggleCartItem } from '@/utils/shopping-cart'
 import { $user } from '@/context/user'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
 import PartTabs from './PartTabs'
@@ -21,7 +19,6 @@ import {
   setBoilerPartsByPopularity,
 } from '@/context/boilerParts'
 import PartAccordion from '@/components/modules/PartPage/PartAccordion'
-import { removeFromCartFx } from '@/app/api/shopping-cart'
 import styles from '@/styles/part/index.module.scss'
 import { IIBoilerPartAdd, IIBoilerPartReplace } from '@/types/boilerparts'
 import { useForm } from 'react-hook-form'
@@ -32,6 +29,12 @@ import axios from 'axios'
 import src from 'react-select/dist/declarations/src'
 import Link from 'next/link'
 import Header from '@/components/modules/Header/Header'
+import { getProizvoditelFx } from '@/app/api/proizvoditel'
+import { $proizvoditels, setProizvoditels } from '@/context/proizvoditels'
+import { getAtributesFx } from '@/app/api/atributes'
+import { $atributess, setAtributess } from '@/context/atributess'
+import { getCategoryFx } from '@/app/api/category'
+import { $Categorys, setCategorys } from '@/context/categorys'
 
 const PartPage = () => {
   const [spinner, setSpinner] = useState(false)
@@ -40,11 +43,10 @@ const PartPage = () => {
   const isMobile = useMediaQuery(850)
   const boilerPart = useStore($boilerPart)
   const boilerParts = useStore($boilerParts)
-  const cartItems = useStore($shoppingCart)
+  const proizvoditel = useStore($proizvoditels)
+  const atributess = useStore($atributess)
+  const categorys = useStore($Categorys)
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : ''
-  const isInCart = cartItems.some((item) => item.partId === boilerPart.id)
-  const spinnerToggleCart = useStore(removeFromCartFx.pending)
-  const spinnerSlider = useStore(getBoilerPartsFx.pending)
   const [images,setImages] = useState(boilerPart.images
     ? (JSON.parse(boilerPart.images))
     : []);
@@ -75,14 +77,23 @@ function updateImagesOrder(images: any) {
   }, [])
 
   const loadBoilerPart = async () => {
-    try {
-      const data = await getBoilerPartsFx('/boiler-parts?limit=20&offset=0')
-
-      setBoilerParts(data)
-      setBoilerPartsByPopularity()
-    } catch (error) {
-      toast.error((error as Error).message)
-    }
+      try {
+        const data = await getBoilerPartsFx('/boiler-parts/All')
+        var dataaa = {"count": 4, "rows": data}
+        setBoilerParts(dataaa)
+        const data2 = await getProizvoditelFx('/proizvoditel')
+      var dataaa2 = {"count": 4, "rows": data2}
+      setProizvoditels(dataaa2)
+      const data3 = await getAtributesFx('/atributes')
+      var dataaa3 = {"count": 4, "rows": data3}
+      setAtributess(dataaa3)
+      const data4 = await getCategoryFx('/category')
+      var dataaa4 = {"count": 4, "rows": data4}
+      setCategorys(dataaa4)
+        return
+      } catch (error) {
+        toast.error((error as Error).message)
+      }
   }
   const {
     register,
@@ -96,9 +107,9 @@ function updateImagesOrder(images: any) {
       setSpinner(true);
       const userData = await AddBoilerPartsFx({
         url: 'boiler-parts/Add',
+        atributes: JSON.stringify(atributaaa),
         memory: data.memory, 
         price: data.price, 
-        proccesor: data.proccesor, 
         vendor_code: data.vendor_code, 
         name: data.name, 
         description: data.description, 
@@ -107,9 +118,7 @@ function updateImagesOrder(images: any) {
         bestseller: data.bestseller, 
         new_: data.new_, 
         popularity: data.popularity,  
-        display: data.display, 
         model: data.model, 
-        camera: data.camera,
       })
 
       if (!userData) {
@@ -118,7 +127,6 @@ function updateImagesOrder(images: any) {
 
       resetField('memory')
       resetField('price')
-      resetField('proccesor')
       resetField('vendor_code')
       resetField('name')
       resetField('description')
@@ -127,18 +135,48 @@ function updateImagesOrder(images: any) {
       resetField('bestseller')
       resetField('new_')
       resetField('popularity')
-      resetField('display')
       resetField('model')
-      resetField('camera')
     } catch (error) {
       toast.error((error as Error).message)
     } finally {
       setSpinner(false)
     }
   }
-
-  const toggleToCart = () =>
-    toggleCartItem(user.username, boilerPart.id, isInCart)
+  var atributaaa = [] as any;
+  const checkPayment2 = async () => {
+    var e = (document.getElementById("organization")) as HTMLSelectElement;
+    var sel = e.selectedIndex;
+    var opt = e.options[sel];
+    var CurValue = opt.value;
+    if(CurValue != ""){
+    var result = prompt("Введите значение для " + CurValue);
+    if(result != ""){
+    var slovar = {} as any;
+    slovar[CurValue] = result;
+    atributaaa.push(slovar);
+    } else {
+      alert("Укажите значение!");
+    }
+  } else {
+    alert("Выберите атрибут из списка!");
+  }
+  }
+  const checkPayment = async () => {
+    var result = prompt("Введите наименование атрибута который хотите удалить.");
+    const keyToDelete = result;
+if (keyToDelete != null){
+  atributaaa = atributaaa.filter((obj: any) => !(keyToDelete in obj));
+}
+  }
+  const checkPayment3 = async () => {
+    var allatribut = "";
+    var result = atributaaa.map((obj: any) => {
+      var key = Object.keys(obj)[0];
+      var value = obj[key];
+      allatribut = allatribut + key + ": " + value + "\n"
+    })
+    alert(allatribut);
+  }
 
   return (
       <div className="container">
@@ -152,6 +190,33 @@ function updateImagesOrder(images: any) {
                 </a>
               </Link>
               </div>
+              <div className={`${styles.divdivdiv}`}>
+        <Link href="/Admin/proizvoditel" passHref legacyBehavior>
+                <a
+                  className={`${styles.header__nav__list__item__link__link2} ${darkModeClass}`}
+                >
+                  Добавить производителя
+                </a>
+              </Link>
+              </div>
+              <div className={`${styles.divdivdiv}`}>
+        <Link href="/Admin/category" passHref legacyBehavior>
+                <a
+                  className={`${styles.header__nav__list__item__link__link2} ${darkModeClass}`}
+                >
+                  Добавить тип товара
+                </a>
+              </Link>
+              </div>
+              <div className={`${styles.divdivdiv}`}>
+              <Link href="/Admin/atributes" passHref legacyBehavior>
+                <a
+                  className={`${styles.header__nav__list__item__link__link2} ${darkModeClass}`}
+                >
+                  Добавить атрибут
+                </a>
+              </Link>
+              </div>
         {!isMobile && <PartTabs />}
         {isMobile && (
           <div className={styles.part__accordion}>
@@ -162,13 +227,17 @@ function updateImagesOrder(images: any) {
                 <p
                   className={`${styles.part__tabs__content__text} ${darkModeClass}`}
                 >
+                  <div
+      className={`${styless.form} ${darkModeClass}`}
+    >
+                  <h2 className={`${styles.form__title} ${styles.title} ${darkModeClass}`}>
+        Добавить товар
+      </h2>
+      </div>
                   <form
       className={`${styless.form} ${darkModeClass}`}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h2 className={`${styles.form__title} ${styles.title} ${darkModeClass}`}>
-        Добавить товар
-      </h2>
   <div className={styles.partdiv}>
     <ReactSortable
       list={images as any}
@@ -222,28 +291,6 @@ function updateImagesOrder(images: any) {
     )}
     {errors.name && errors.name.type === 'maxLength' && (
       <span className={styless.error_alert}>Не более 15 символов!</span>
-    )}
-  </label>
-  <label className={styless.form__label}>
-    <input
-      {...register('proccesor', {
-        required: 'Введите процессор!',
-        minLength: 5,
-        maxLength: 255,
-      })}
-      className={styless.form__input}
-      type="text"
-      placeholder="Процессор"
-      name='proccesor'
-    />
-    {errors.name && (
-      <span className={styless.error_alert}>{errors.name?.message}</span>
-    )}
-    {errors.name && errors.name.type === 'minLength' && (
-      <span className={styless.error_alert}>Минимум 5 символов!</span>
-    )}
-    {errors.name && errors.name.type === 'maxLength' && (
-      <span className={styless.error_alert}>Не более 255 символов!</span>
     )}
   </label>
   <label className={styless.form__label}>
@@ -324,23 +371,18 @@ function updateImagesOrder(images: any) {
     )}
   </label>
   <label className={styless.form__label}>
-    <select {...register('model', {
-        required: 'Выберите производителя!',
-      })}
-      name='model'
-      className={styless.form__input}>
-  <option value="">--Производитель товара?--</option>
-  <option value="Apple">Apple</option>
-  <option value="Samsung">Samsung</option>
-  <option value="Xiaomi">Xiaomi</option>
-  <option value="Lenovo">Lenovo</option>
-  <option value="Asus">Asus</option>
-  <option value="LG">LG</option>
-  <option value="Acer">Acer</option>
-  <option value="Huawei">Huawei</option>
-  <option value="Honor">Honor</option>
-  <option value="Poco">Poco</option>
-</select>
+  <select {...register('model', {
+                      required: 'Выберите производителя!',
+                    })}
+                    name='model'
+                    className={styless.form__input}>
+                <option value="">--Производитель товара?--</option>
+                {proizvoditel.rows?.length ? (proizvoditel.rows.map((item) => (
+                <option value={item.proizvoditel}>{item.proizvoditel}</option>
+                  ))) : (
+                    null
+                  )}
+                  </select>
   </label>
   <label className={styless.form__label}>
     <select {...register('memory', {
@@ -348,13 +390,12 @@ function updateImagesOrder(images: any) {
       })}
       name='memory'
       className={styless.form__input}>
-  <option value="">--Память товара?--</option>
-  <option value="32GB">32GB</option>
-  <option value="64GB">64GB</option>
-  <option value="128GB">128GB</option>
-  <option value="256GB">256GB</option>
-  <option value="512GB">512GB</option>
-  <option value="1TB">1TB</option>
+  <option value="">--Тип товара?--</option>
+  {categorys.rows?.length ? (categorys.rows.map((item) => (
+                <option value={item.category}>{item.category}</option>
+                  ))) : (
+                    null
+                  )}
 </select>
   </label>
   <label className={styless.form__label}>
@@ -385,28 +426,6 @@ function updateImagesOrder(images: any) {
   </label>
   <label className={styless.form__label}>
     <input
-      {...register('display', {
-        required: 'Введите дисплей!',
-        minLength: 5,
-        maxLength: 255,
-      })}
-      name='display'
-      className={styless.form__input}
-      type="text"
-      placeholder="Дисплей гаджета"
-    />
-    {errors.name && (
-      <span className={styless.error_alert}>{errors.name?.message}</span>
-    )}
-    {errors.name && errors.name.type === 'minLength' && (
-      <span className={styless.error_alert}>Минимум 5 символов!</span>
-    )}
-    {errors.name && errors.name.type === 'maxLength' && (
-      <span className={styless.error_alert}>Не более 255 символов!</span>
-    )}
-  </label>
-  <label className={styless.form__label}>
-    <input
       {...register('description', {
         required: 'Введите описание!',
       })}
@@ -420,28 +439,6 @@ function updateImagesOrder(images: any) {
     )}
   </label>
   <label className={styless.form__label}>
-    <input
-      {...register('camera', {
-        required: 'Введите камеру!',
-        minLength: 5,
-        maxLength: 255,
-      })}
-      className={styless.form__input}
-      type="text"
-      placeholder="Камера гаджета"
-      name='camera'
-    />
-    {errors.name && (
-      <span className={styless.error_alert}>{errors.name?.message}</span>
-    )}
-    {errors.name && errors.name.type === 'minLength' && (
-      <span className={styless.error_alert}>Минимум 5 символов!</span>
-    )}
-    {errors.name && errors.name.type === 'maxLength' && (
-      <span className={styless.error_alert}>Не более 255 символов!</span>
-    )}
-  </label>
-  <label className={styless.form__label}>
     <select {...register('bestseller', {
         required: 'Выберите статус хита!',
       })}
@@ -452,6 +449,41 @@ function updateImagesOrder(images: any) {
   <option value="false">Нет</option>
 </select>
   </label>
+  <label className={styless.form__label}>
+  <select 
+  id="organization"
+                    name='atributes'
+                    className={styless.form__input}>
+                <option value="">--Добавить атрибут товара--</option>
+                {atributess.rows?.length ? (atributess.rows.map((item) => (
+                <option value={item.atributes}>{item.atributes}</option>
+                  )) ) : (
+                    <span>Список атрибутов пуст...</span>
+                  )}
+                  </select>
+  </label>
+
+          <button
+      onClick={(e:any) => checkPayment2()}
+      type="button"
+        className={`${styless.form__button} ${styless.button} ${styless.submit} ${darkModeClass}`}
+      >
+        Добавить атрибут
+      </button>
+      <button
+      onClick={(e:any) => checkPayment3()}
+      type="button"
+        className={`${styless.form__button} ${styless.button} ${styless.submit} ${darkModeClass}`}
+      >
+        Посмотреть атрибуты
+      </button>
+      <button
+      onClick={(e:any) => checkPayment()}
+      type="button"
+        className={`${styless.form__button} ${styless.button} ${styless.submit} ${darkModeClass}`}
+      >
+        Удалить атрибут
+      </button>
       <button
       type='submit'
         className={`${styless.form__button} ${styless.button} ${styless.submit} ${darkModeClass}`}

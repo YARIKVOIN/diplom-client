@@ -16,8 +16,8 @@ export const getBoilerPartsFx = createEffect(async (url: string) => {
 })
 
 export const updateBoilerPartsFx = createEffect(
-  async ({ url, id, memory, price, proccesor, vendor_code, name, description, images, in_stock, bestseller, new_, popularity,  display, model, camera}: IBoilerPartReplace) => {
-    const { data } = await api.patch(url, { id, memory, price, proccesor, vendor_code, name, description, images, in_stock, bestseller, new_, popularity,  display, model, camera })
+  async ({ url, id, memory, price, atributes, vendor_code, name, description, images, in_stock, bestseller, new_, popularity, model}: IBoilerPartReplace) => {
+    const { data } = await api.patch(url, { id, memory, price, atributes, vendor_code, name, description, images, in_stock, bestseller, new_, popularity, model })
 
     if (data.warningMessage) {
 
@@ -32,8 +32,8 @@ export const updateBoilerPartsFx = createEffect(
 )
 
 export const AddBoilerPartsFx = createEffect(
-  async ({ url, memory, price, proccesor, vendor_code, name, description, images, in_stock, bestseller, new_, popularity,  display, model, camera}: IBoilerPartAdd) => {
-    const { data } = await api.post(url, { memory, price, proccesor, vendor_code, name, description, images, in_stock, bestseller, new_, popularity,  display, model, camera })
+  async ({ url, memory, price, atributes, vendor_code, name, description, images, in_stock, bestseller, new_, popularity, model}: IBoilerPartAdd) => {
+    const { data } = await api.post(url, { memory, price, atributes, vendor_code, name, description, images, in_stock, bestseller, new_, popularity, model })
 
     if (data.warningMessage) {
 

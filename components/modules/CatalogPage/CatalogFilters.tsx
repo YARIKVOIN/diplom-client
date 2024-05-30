@@ -150,7 +150,6 @@ const CatalogFilters = ({
       const partsQuery = `&parts=${encodedPartsQuery}`
       const initialPage = currentPage > 0 ? 0 : currentPage
       if (boilers.length && parts.length && isPriceRangeChanged) {
-        console.log("4");
         updateParamsAndFilters(
           {
             boiler: encodedBoilerQuery,
@@ -166,7 +165,6 @@ const CatalogFilters = ({
       }
 
       if (isPriceRangeChanged) {
-        console.log("3");
         updateParamsAndFilters(
           {
             priceFrom,
@@ -179,7 +177,6 @@ const CatalogFilters = ({
       }
 
       if (boilers.length && parts.length) {
-        console.log("2");
         updateParamsAndFilters(
           {
             boiler: encodedBoilerQuery,
@@ -193,7 +190,6 @@ const CatalogFilters = ({
       }
       console.log(boilers.length, boilers);
       if (boilers.length) {
-        console.log("1");
         updateParamsAndFilters(
           {
             boiler: encodedBoilerQuery,
@@ -205,7 +201,6 @@ const CatalogFilters = ({
       }
 
       if (parts.length) {
-        console.log("5");
         updateParamsAndFilters(
           {
             parts: encodedPartsQuery,
@@ -217,7 +212,6 @@ const CatalogFilters = ({
       }
 
       if (boilers.length && isPriceRangeChanged) {
-        console.log("6");
         updateParamsAndFilters(
           {
             boiler: encodedBoilerQuery,
@@ -231,7 +225,6 @@ const CatalogFilters = ({
       }
 
       if (parts.length && isPriceRangeChanged) {
-        console.log("7");
         updateParamsAndFilters(
           {
             parts: encodedPartsQuery,

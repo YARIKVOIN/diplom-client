@@ -5,10 +5,8 @@ export interface IShoppingCartItem {
   image: string
   in_stock: number
   memory: string
-  proccesor: string
-  camera: string
+  atributes: string
   model: string
-  display: string
   count: number
   total_price: number
   userId: number

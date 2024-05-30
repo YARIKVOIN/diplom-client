@@ -51,5 +51,10 @@
     "eslint-config-prettier": "^8.10.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.7"
+  },
+    "browser": {
+      "fs": false,
+      "os": false,
+      "path": false
+    }
   }
-}

@@ -47,6 +47,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
   )
   const darkModeClass = mode === 'dark' ? `${styles.dark_mode}` : ''
   const router = useRouter()
+  // console.log(boilerManufacturers);
   const isAnyBoilerManufacturerChecked = boilerManufacturers.some(
     (item) => item.checked
   )
@@ -223,7 +224,7 @@ const CatalogPage = ({ query }: { query: IQueryParams }) => {
           <AnimatePresence>
             {isAnyPartsManufacturerChecked && (
               <ManufacturersBlock
-                title="Память:"
+                title="Тип товара:"
                 event={updatePartsManufacturer}
                 manufacturersList={partsManufacturers}
               />
